@@ -1,7 +1,6 @@
 package cn.myblog.entity;
 
 //User表的实体类
-
 public class Users {
 
     private String User_Id;
@@ -9,7 +8,9 @@ public class Users {
     private String User_Pwd;
     private String User_Autograph;
     private String User_State;
+    private String User_WXId;
     private String User_Phone;
+    private String User_Box;
     private String User_RealName;
     private String User_Birth;
     private String User_Register;
@@ -56,12 +57,28 @@ public class Users {
         User_State = user_State;
     }
 
+    public String getUser_WXId() {
+        return User_WXId;
+    }
+
+    public void setUser_WXId(String user_WXId) {
+        User_WXId = user_WXId;
+    }
+
     public String getUser_Phone() {
         return User_Phone;
     }
 
     public void setUser_Phone(String user_Phone) {
         User_Phone = user_Phone;
+    }
+
+    public String getUser_Box() {
+        return User_Box;
+    }
+
+    public void setUser_Box(String user_Box) {
+        User_Box = user_Box;
     }
 
     public String getUser_RealName() {

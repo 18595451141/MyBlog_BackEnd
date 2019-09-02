@@ -11,7 +11,9 @@ import java.util.List;
 public class UsersService {
     @Autowired
     private UsersMapper users_Mapper;
-    public List<Users> FindUsers(){
-        return users_Mapper.FindUsers();
+
+    public Boolean UsersLogin(Users user){
+        return users_Mapper.UsersLogin(user);
     }
+
 }
