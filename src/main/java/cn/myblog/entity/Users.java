@@ -3,17 +3,29 @@ package cn.myblog.entity;
 //User表的实体类
 public class Users {
 
-    private String User_Id;
-    private String User_Name;
-    private String User_Pwd;
-    private String User_Autograph;
-    private String User_State;
-    private String User_WXId;
-    private String User_Phone;
-    private String User_Box;
-    private String User_RealName;
-    private String User_Birth;
-    private String User_Register;
+    private String User_Id; //用户ID
+
+    private String User_Name; //账号（用户名称）
+
+    private String User_Pwd; //密码
+
+    private Integer User_Jurisdiction; //权限：0普通用户,1会员,2管理员,3超管
+
+    private String User_Autograph; //签名
+
+    private String User_State; //状态
+
+    private String User_WXId; //微信号码
+
+    private String User_Phone; //手机号码
+
+    private String User_MailBox; //邮箱号码
+
+    private String User_RealName; //真实姓名
+
+    private String User_Birth; //出生日期
+
+    private String User_Register; //注册时间
 
     //Alt+Insert创建get/set快捷键
 
@@ -39,6 +51,14 @@ public class Users {
 
     public void setUser_Pwd(String user_Pwd) {
         User_Pwd = user_Pwd;
+    }
+
+    public Integer getUser_Jurisdiction() {
+        return User_Jurisdiction;
+    }
+
+    public void setUser_Jurisdiction(Integer user_Jurisdiction) {
+        User_Jurisdiction = user_Jurisdiction;
     }
 
     public String getUser_Autograph() {
@@ -73,12 +93,12 @@ public class Users {
         User_Phone = user_Phone;
     }
 
-    public String getUser_Box() {
-        return User_Box;
+    public String getUser_MailBox() {
+        return User_MailBox;
     }
 
-    public void setUser_Box(String user_Box) {
-        User_Box = user_Box;
+    public void setUser_MailBox(String user_MailBox) {
+        User_MailBox = user_MailBox;
     }
 
     public String getUser_RealName() {
@@ -111,9 +131,12 @@ public class Users {
                 "User_Id='" + User_Id + '\'' +
                 ", User_Name='" + User_Name + '\'' +
                 ", User_Pwd='" + User_Pwd + '\'' +
+                ", User_Jurisdiction=" + User_Jurisdiction +
                 ", User_Autograph='" + User_Autograph + '\'' +
                 ", User_State='" + User_State + '\'' +
+                ", User_WXId='" + User_WXId + '\'' +
                 ", User_Phone='" + User_Phone + '\'' +
+                ", User_MailBox='" + User_MailBox + '\'' +
                 ", User_RealName='" + User_RealName + '\'' +
                 ", User_Birth='" + User_Birth + '\'' +
                 ", User_Register='" + User_Register + '\'' +
