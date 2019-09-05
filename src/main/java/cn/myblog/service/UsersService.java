@@ -17,13 +17,13 @@ public class UsersService {
 
     /*用户登录*/
     public Boolean UsersLogin(Users user){
-        user.setUser_Pwd(SHA512Utils.SHA512(user.getUser_Pwd()));
+        user.setUser_password(SHA512Utils.SHA512(user.getUser_password()));
         return users_Mapper.UsersLogin(user);
     }
 
     /*添加用户*/
     public Boolean UsersAdd(Users user){
-        user.setUser_Pwd(SHA512Utils.SHA512(user.getUser_Pwd()));
+        user.setUser_password(SHA512Utils.SHA512(user.getUser_password()));
         return users_Mapper.UsersAdd(user);
     }
 

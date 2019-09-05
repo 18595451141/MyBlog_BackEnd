@@ -11,10 +11,10 @@ import java.util.List;
 @Mapper
 @Component
 public interface UsersMapper {
-    @Select("SELECT COUNT(*) FROM Users WHERE User_Name=#{User_Name} and User_Pwd=#{User_Pwd}")
+    @Select("SELECT COUNT(*) FROM Users WHERE User_accountNumber=#{User_accountNumber} and User_password=#{User_password}")
     Boolean UsersLogin(Users user);
 
-    @Insert("INSERT INTO USERS(User_Name,User_Pwd) VALUES(#{User_Name},#{User_Pwd})")
+    @Insert("INSERT INTO USERS(User_accountNumber,User_password) VALUES(#{User_accountNumber},#{User_password})")
     Boolean UsersAdd(Users user);
 
 }

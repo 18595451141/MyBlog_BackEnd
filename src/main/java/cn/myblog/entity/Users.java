@@ -1,145 +1,180 @@
 package cn.myblog.entity;
 
-//User表的实体类
+import java.util.Date;
+
+//User表实体类
 public class Users {
 
-    private String User_Id; //用户ID
+    private Integer User_id; //用户表主键id自增非空
 
-    private String User_Name; //账号（用户名称）
+    private String User_accountNumber; //账号唯一非空
 
-    private String User_Pwd; //密码
+    private String User_password; //密码非空
 
-    private Integer User_Jurisdiction; //权限：0普通用户,1会员,2管理员,3超管
+    private String User_nickname; //昵称
 
-    private String User_Autograph; //签名
+    private String User_headPortrait; //头像存储路径
 
-    private String User_State; //状态
+    private Integer User_jurisdiction; //用户权限：0普通用户，1会员，2管理员，3最高管理
 
-    private String User_WXId; //微信号码
+    private String User_autograph; //签名
 
-    private String User_Phone; //手机号码
+    private Integer User_state; //状态
 
-    private String User_MailBox; //邮箱号码
+    private String User_phone; //手机
 
-    private String User_RealName; //真实姓名
+    private String User_weChatid; //微信
 
-    private String User_Birth; //出生日期
+    private String User_mailBox; //邮箱
 
-    private String User_Register; //注册时间
+    private Date User_birth; //出生日期
 
-    //Alt+Insert创建get/set快捷键
+    private String User_realName; //真实姓名
 
-    public String getUser_Id() {
-        return User_Id;
+    private String User_idNumber; //身份证号
+
+    private Date User_register; //注册时间
+
+    //Alt+Insert 快捷创建 Getter and Setter
+
+    public Integer getUser_id() {
+        return User_id;
     }
 
-    public void setUser_Id(String user_Id) {
-        User_Id = user_Id;
+    public void setUser_id(Integer user_id) {
+        User_id = user_id;
     }
 
-    public String getUser_Name() {
-        return User_Name;
+    public String getUser_accountNumber() {
+        return User_accountNumber;
     }
 
-    public void setUser_Name(String user_Name) {
-        User_Name = user_Name;
+    public void setUser_accountNumber(String user_accountNumber) {
+        User_accountNumber = user_accountNumber;
     }
 
-    public String getUser_Pwd() {
-        return User_Pwd;
+    public String getUser_password() {
+        return User_password;
     }
 
-    public void setUser_Pwd(String user_Pwd) {
-        User_Pwd = user_Pwd;
+    public void setUser_password(String user_password) {
+        User_password = user_password;
     }
 
-    public Integer getUser_Jurisdiction() {
-        return User_Jurisdiction;
+    public String getUser_nickname() {
+        return User_nickname;
     }
 
-    public void setUser_Jurisdiction(Integer user_Jurisdiction) {
-        User_Jurisdiction = user_Jurisdiction;
+    public void setUser_nickname(String user_nickname) {
+        User_nickname = user_nickname;
     }
 
-    public String getUser_Autograph() {
-        return User_Autograph;
+    public String getUser_headPortrait() {
+        return User_headPortrait;
     }
 
-    public void setUser_Autograph(String user_Autograph) {
-        User_Autograph = user_Autograph;
+    public void setUser_headPortrait(String user_headPortrait) {
+        User_headPortrait = user_headPortrait;
     }
 
-    public String getUser_State() {
-        return User_State;
+    public Integer getUser_jurisdiction() {
+        return User_jurisdiction;
     }
 
-    public void setUser_State(String user_State) {
-        User_State = user_State;
+    public void setUser_jurisdiction(Integer user_jurisdiction) {
+        User_jurisdiction = user_jurisdiction;
     }
 
-    public String getUser_WXId() {
-        return User_WXId;
+    public String getUser_autograph() {
+        return User_autograph;
     }
 
-    public void setUser_WXId(String user_WXId) {
-        User_WXId = user_WXId;
+    public void setUser_autograph(String user_autograph) {
+        User_autograph = user_autograph;
     }
 
-    public String getUser_Phone() {
-        return User_Phone;
+    public Integer getUser_state() {
+        return User_state;
     }
 
-    public void setUser_Phone(String user_Phone) {
-        User_Phone = user_Phone;
+    public void setUser_state(Integer user_state) {
+        User_state = user_state;
     }
 
-    public String getUser_MailBox() {
-        return User_MailBox;
+    public String getUser_phone() {
+        return User_phone;
     }
 
-    public void setUser_MailBox(String user_MailBox) {
-        User_MailBox = user_MailBox;
+    public void setUser_phone(String user_phone) {
+        User_phone = user_phone;
     }
 
-    public String getUser_RealName() {
-        return User_RealName;
+    public String getUser_weChatid() {
+        return User_weChatid;
     }
 
-    public void setUser_RealName(String user_RealName) {
-        User_RealName = user_RealName;
+    public void setUser_weChatid(String user_weChatid) {
+        User_weChatid = user_weChatid;
     }
 
-    public String getUser_Birth() {
-        return User_Birth;
+    public String getUser_mailBox() {
+        return User_mailBox;
     }
 
-    public void setUser_Birth(String user_Birth) {
-        User_Birth = user_Birth;
+    public void setUser_mailBox(String user_mailBox) {
+        User_mailBox = user_mailBox;
     }
 
-    public String getUser_Register() {
-        return User_Register;
+    public Date getUser_birth() {
+        return User_birth;
     }
 
-    public void setUser_Register(String user_Register) {
-        User_Register = user_Register;
+    public void setUser_birth(Date user_birth) {
+        User_birth = user_birth;
+    }
+
+    public String getUser_realName() {
+        return User_realName;
+    }
+
+    public void setUser_realName(String user_realName) {
+        User_realName = user_realName;
+    }
+
+    public String getUser_idNumber() {
+        return User_idNumber;
+    }
+
+    public void setUser_idNumber(String user_idNumber) {
+        User_idNumber = user_idNumber;
+    }
+
+    public Date getUser_register() {
+        return User_register;
+    }
+
+    public void setUser_register(Date user_register) {
+        User_register = user_register;
     }
 
     @Override
     public String toString() {
         return "Users{" +
-                "User_Id='" + User_Id + '\'' +
-                ", User_Name='" + User_Name + '\'' +
-                ", User_Pwd='" + User_Pwd + '\'' +
-                ", User_Jurisdiction=" + User_Jurisdiction +
-                ", User_Autograph='" + User_Autograph + '\'' +
-                ", User_State='" + User_State + '\'' +
-                ", User_WXId='" + User_WXId + '\'' +
-                ", User_Phone='" + User_Phone + '\'' +
-                ", User_MailBox='" + User_MailBox + '\'' +
-                ", User_RealName='" + User_RealName + '\'' +
-                ", User_Birth='" + User_Birth + '\'' +
-                ", User_Register='" + User_Register + '\'' +
+                "User_id=" + User_id +
+                ", User_accountNumber='" + User_accountNumber + '\'' +
+                ", User_password='" + User_password + '\'' +
+                ", User_nickname='" + User_nickname + '\'' +
+                ", User_headPortrait='" + User_headPortrait + '\'' +
+                ", User_jurisdiction=" + User_jurisdiction +
+                ", User_autograph='" + User_autograph + '\'' +
+                ", User_state=" + User_state +
+                ", User_phone='" + User_phone + '\'' +
+                ", User_weChatid='" + User_weChatid + '\'' +
+                ", User_mailBox='" + User_mailBox + '\'' +
+                ", User_birth=" + User_birth +
+                ", User_realName='" + User_realName + '\'' +
+                ", User_idNumber='" + User_idNumber + '\'' +
+                ", User_register=" + User_register +
                 '}';
     }
 }
