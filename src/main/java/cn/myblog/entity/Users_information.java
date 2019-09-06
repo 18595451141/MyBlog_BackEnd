@@ -3,13 +3,15 @@ package cn.myblog.entity;
 import java.util.Date;
 
 //User表实体类
-public class Users {
+public class Users_information {
 
     private Integer User_id; //用户表主键id自增非空
 
     private String User_accountNumber; //账号唯一非空
 
     private String User_password; //密码非空
+
+    private String User_Key; //用户密钥
 
     private String User_nickname; //昵称
 
@@ -18,8 +20,6 @@ public class Users {
     private Integer User_jurisdiction; //用户权限：0普通用户，1会员，2管理员，3最高管理
 
     private String User_autograph; //签名
-
-    private Integer User_state; //状态
 
     private String User_phone; //手机
 
@@ -36,6 +36,7 @@ public class Users {
     private Date User_register; //注册时间
 
     //Alt+Insert 快捷创建 Getter and Setter
+
 
     public Integer getUser_id() {
         return User_id;
@@ -59,6 +60,14 @@ public class Users {
 
     public void setUser_password(String user_password) {
         User_password = user_password;
+    }
+
+    public String getUser_Key() {
+        return User_Key;
+    }
+
+    public void setUser_Key(String user_Key) {
+        User_Key = user_Key;
     }
 
     public String getUser_nickname() {
@@ -91,14 +100,6 @@ public class Users {
 
     public void setUser_autograph(String user_autograph) {
         User_autograph = user_autograph;
-    }
-
-    public Integer getUser_state() {
-        return User_state;
-    }
-
-    public void setUser_state(Integer user_state) {
-        User_state = user_state;
     }
 
     public String getUser_phone() {
@@ -159,15 +160,15 @@ public class Users {
 
     @Override
     public String toString() {
-        return "Users{" +
+        return "Users_information{" +
                 "User_id=" + User_id +
                 ", User_accountNumber='" + User_accountNumber + '\'' +
                 ", User_password='" + User_password + '\'' +
+                ", User_Key='" + User_Key + '\'' +
                 ", User_nickname='" + User_nickname + '\'' +
                 ", User_headPortrait='" + User_headPortrait + '\'' +
                 ", User_jurisdiction=" + User_jurisdiction +
                 ", User_autograph='" + User_autograph + '\'' +
-                ", User_state=" + User_state +
                 ", User_phone='" + User_phone + '\'' +
                 ", User_weChatid='" + User_weChatid + '\'' +
                 ", User_mailBox='" + User_mailBox + '\'' +

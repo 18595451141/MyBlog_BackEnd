@@ -1,6 +1,6 @@
 package cn.myblog.mapper;
 
-import cn.myblog.entity.Users;
+import cn.myblog.entity.Users_information;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Select;
@@ -11,10 +11,13 @@ import java.util.List;
 @Mapper
 @Component
 public interface UsersMapper {
-    @Select("SELECT COUNT(*) FROM Users WHERE User_accountNumber=#{User_accountNumber} and User_password=#{User_password}")
-    Boolean UsersLogin(Users user);
+    @Select("SELECT * FROM Users_information WHERE User_accountNumber=#{User_accountNumber}")
+    List<Users_information> UsersLogin(Users_information users_information);
 
-    @Insert("INSERT INTO USERS(User_accountNumber,User_password) VALUES(#{User_accountNumber},#{User_password})")
-    Boolean UsersAdd(Users user);
+    @Select("SELECT Count(*) FROM Users_information WHERE User_accountNumber=#{User_accountNumber}")
+    Integer UsersAccountDuplication(Users_information user);
+
+    @Insert("INSERT INTO Users_information(User_accountNumber,User_password,User_Key) VALUES(#{User_accountNumber},#{User_password},#{User_Key})")
+    Boolean UsersAdd(Users_information user);
 
 }
