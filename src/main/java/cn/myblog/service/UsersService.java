@@ -1,22 +1,22 @@
 package cn.myblog.service;
 
+import cn.myblog.controller.WebSocketServer;
 import cn.myblog.entity.Users_information;
 import cn.myblog.entity.Users_state;
 import cn.myblog.mapper.UsersMapper;
 import cn.myblog.mapper.UsersStateMapper;
 import cn.myblog.util.AES128Utils;
-import cn.myblog.util.AES256Utils;
 import cn.myblog.util.CommonlyUsedUtils;
 import cn.myblog.util.SHA512Utils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
+import java.io.IOException;
 import java.util.List;
-import java.util.Random;
 
 @Service
+@Transactional(rollbackFor = Exception.class) //指定回滚，遇到异常Excel回滚
 public class UsersService {
     @Autowired
     private UsersMapper users_Mapper;
@@ -25,6 +25,7 @@ public class UsersService {
 
     /*用户登录*/
     public Boolean UsersLogin(Users_information user){
+        if(user!=null){
         try {
             Users_state users_state=new Users_state();
             //验证身份
@@ -37,10 +38,12 @@ public class UsersService {
                     if(users_stateMapper.Users_stateUnique(users_state).size()==0) {
                         if(users_stateMapper.Users_stateAdd(users_state)){
                             System.out.println("-----登录成功-----");
-                            return true;
                         }
                         return false;
                     }else{
+                        // 如果已经登录，则发送挤退信息
+                        /*WebSocketServer wss = new WebSocketServer();
+                        wss.getWebSocket(false);*/
                         if(users_stateMapper.Users_stateDelete(users_state)){
                             if(users_stateMapper.Users_stateAdd(users_state)){
                                 System.out.println("-----顶号成功-----");
@@ -56,11 +59,16 @@ public class UsersService {
             }else{
                 throw new Exception("系统错误：用户名重复,数据库里用户名必须唯一");
             }
+
         }catch (Exception e){
             System.out.println("-----无此用户-----");
             return false;
         }
+        }else{
+            return false;
+        }
     }
+
 
     /*添加用户*/
     public Boolean UsersAdd(Users_information user){
@@ -78,5 +86,7 @@ public class UsersService {
             return false;
         }
     }
+
+    /*验证用户权限身份*/
 
 }

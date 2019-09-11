@@ -2,22 +2,10 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>登录注册示例</title>
+    <title>WebSocket测试实例</title>
 </head>
 <body>
-    登录：
-    <form action="/Users/UsersLogin" method="post">
-        账号：<input type="text" value="张三" name="User_accountNumber" id="User_accountNumber"/>
-        密码：<input type="text" value="123456" name="User_password" id="User_password"/>
-        <input type="submit" value="提交">
-    </form><br/>
-    <input type="submit" value="WebSocket测试实例" onclick="openWebSocket('张三')"><br/>
-    注册：
-    <form action="/Users/UsersAdd" method="post">
-        账号：<input type="text" value="张三" name="User_accountNumber"/>
-        密码：<input type="text" value="123456" name="User_password"/>
-        <input type="submit" value="提交">
-    </form>
+    <input type="submit" value="WebSocket测试实例" onclick="openWebSocket('张三')">
 </body>
 <script>
     function openWebSocket(User_accountNumber) { // User_accountNumber为当前登录用户的账号
@@ -30,12 +18,12 @@
             //打开事件
             socket.onopen = function() {
                 console.log("Socket 已打开");
-                //web sockets只能通过连接发送纯文本数据，所以对于复杂的数据结构，在通过连接发送之前，必须进行序列化。
-                var message = {
-                    User_accountNumber: document.getElementById("User_accountNumber").value,
-                    User_password: document.getElementById("User_password").value
-                };
                 //Web Socket已连接上，使用send()方法发送数据
+                var message = {
+                    User_accountNumber: "张三",
+                    User_password: "123456"
+                };
+                //web sockets只能通过连接发送纯文本数据，所以对于复杂的数据结构，在通过连接发送之前，必须进行序列化。
                 socket.send(JSON.stringify(message));
                 console.log("数据发送中...");
             };
@@ -53,9 +41,9 @@
                 console.log("Socket发生了错误");
             };
             //窗口关闭则关闭Socket
-            window.unload = function(){
+            /*$(window).unload(function(){
                 socket.close();
-            };
+            });*/
         }
     }
 </script>
