@@ -1,50 +1,59 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-    <meta charset="UTF-8">
-    <title>WebSocket测试实例</title>
+    <meta charset="UTF-8"/>
+    <title>WebSocket示例：在线聊天</title>
+    <style type="text/css">
+        #msg-view{
+            height: 300px;
+            overflow: scroll;
+        }
+    </style>
 </head>
 <body>
-    <input type="submit" value="WebSocket测试实例" onclick="openWebSocket('张三')">
-</body>
+<div id="msg-view"></div><!--窗口-->
+<div id="msg-input">
+    <input id="msg" type="text"/><!--输入框-->
+    <button id="sendBtn" onclick="sendMsg()">发送</button>
+</div>
 <script>
-    function openWebSocket(User_accountNumber) { // User_accountNumber为当前登录用户的账号
-        var socket;
-        if(typeof(WebSocket) == undefined) {
-            console.log("您的浏览器不支持WebSocket");
+    var websocket;
+    if(typeof(WebSocket) == undefined) {
+        console.log("您的浏览器不支持WebSocket");
+    }else{
+        //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
+        websocket = new WebSocket("ws://127.0.0.1:8010/sunSocket");
+    }
+    //窗口关闭则关闭Socket
+    window.onunload = function(){
+        websocket.close();
+    };
+
+    //WebSocket获得消息事件onmessage
+    websocket.onmessage = function (event) {
+        var data = event.data;
+        if(typeof(data) == 'string'){
+            showMsg(data)
         }else{
-            //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
-            socket = new WebSocket("ws://127.0.0.1:8010/websocket/"+User_accountNumber);
-            //打开事件
-            socket.onopen = function() {
-                console.log("Socket 已打开");
-                //Web Socket已连接上，使用send()方法发送数据
-                var message = {
-                    User_accountNumber: "张三",
-                    User_password: "123456"
-                };
-                //web sockets只能通过连接发送纯文本数据，所以对于复杂的数据结构，在通过连接发送之前，必须进行序列化。
-                socket.send(JSON.stringify(message));
-                console.log("数据发送中...");
-            };
-            //获得消息事件
-            socket.onmessage = function(msg) {
-                var received_msg=msg.data;
-                console.log("数据已接收："+received_msg);
-            };
-            //关闭事件
-            socket.onclose = function() {
-                console.log("Socket已关闭");
-            };
-            //发生了错误事件
-            socket.onerror = function() {
-                console.log("Socket发生了错误");
-            };
-            //窗口关闭则关闭Socket
-            /*$(window).unload(function(){
-                socket.close();
-            });*/
+            showMsg(data.ip + ':' + data.msg)
         }
     }
+
+    //发生了错误事件
+    websocket.onerror = function() {
+        showMsg('连接异常')
+    };
+
+    //将值传给后台
+    function sendMsg() {
+        var msg = document.getElementById('msg').value;
+        websocket.send(msg)
+    }
+
+    //将内容显示到msg-view里面
+    function showMsg(msg) {
+        document.getElementById('msg-view').innerHTML += msg + '<br/>';
+    }
 </script>
+</body>
 </html>
