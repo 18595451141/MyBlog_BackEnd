@@ -1,4 +1,5 @@
 package cn.myblog.util;
+
 import java.security.SecureRandom;
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
@@ -12,7 +13,7 @@ public class AES128Utils {
         }
         try {
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
-            SecureRandom random=SecureRandom.getInstance("SHA1PRNG");
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             random.setSeed(key.getBytes());
             kgen.init(128, random);
             SecretKey secretKey = kgen.generateKey();
@@ -52,7 +53,7 @@ public class AES128Utils {
         }
         try {
             KeyGenerator kgen = KeyGenerator.getInstance("AES");
-            SecureRandom random=SecureRandom.getInstance("SHA1PRNG");
+            SecureRandom random = SecureRandom.getInstance("SHA1PRNG");
             random.setSeed(key.getBytes());
             kgen.init(128, random);
             SecretKey secretKey = kgen.generateKey();

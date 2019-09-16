@@ -1,4 +1,5 @@
-package cn.myblog.controller;
+package cn.myblog.socket;
+
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.websocket.*;
@@ -14,13 +15,15 @@ public class WebSocketServer {
     private static volatile int onlineCount = 0;
     //用来存放每个客户端对应的WebSocket对象。
     private static CopyOnWriteArraySet<WebSocketServer> webSocketSet = new CopyOnWriteArraySet<WebSocketServer>();
+
     /**
      * 连接建立成功调用的方法
      */
     @OnOpen
     public void onOpen(@PathParam("User_accountNumber") String User_accountNumber) {
-        System.out.println("WebSocket连接成功 账号："+User_accountNumber);
+        System.out.println("WebSocket连接成功 账号：" + User_accountNumber);
     }
+
     /**
      * 连接关闭调用的方法
      */
@@ -28,15 +31,18 @@ public class WebSocketServer {
     public void onClose() {
         System.out.println("WebSocket连接关闭 ");
     }
+
     /**
      * 收到客户端消息后调用的方法
+     *
      * @param message 客户端发送过来的消息
      */
     @OnMessage
     public String onMessage(String message) {
-        System.out.println("接收到前端传递的参数包："+message);
+        System.out.println("接收到前端传递的参数包：" + message);
         return "后端反馈字符串336";
     }
+
     /**
      * @param session
      * @param error

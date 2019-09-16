@@ -76,9 +76,9 @@ public class AES256Utils {
 
     private static byte[] tohash256Deal(String datastr) {
         try {
-            MessageDigest digester=MessageDigest.getInstance("SHA-256");
+            MessageDigest digester = MessageDigest.getInstance("SHA-256");
             digester.update(datastr.getBytes());
-            byte[] hex=digester.digest();
+            byte[] hex = digester.digest();
             return hex;
         } catch (NoSuchAlgorithmException e) {
             throw new RuntimeException(e.getMessage());

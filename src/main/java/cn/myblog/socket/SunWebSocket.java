@@ -1,4 +1,4 @@
-package cn.myblog.controller;
+package cn.myblog.socket;
 
 import org.springframework.stereotype.Component;
 
@@ -9,7 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.CopyOnWriteArraySet;
 
-@ServerEndpoint(value="/sunSocket")
+@ServerEndpoint(value = "/sunSocket")
 @Component
 public class SunWebSocket {
 
@@ -26,8 +26,10 @@ public class SunWebSocket {
      * 与某个客户端的会话，通过会话给客户端传递消息
      */
     private Session session;
+
     /**
      * 开启一个客户端对话连接
+     *
      * @param session
      */
     @OnOpen
@@ -40,6 +42,7 @@ public class SunWebSocket {
 
     /**
      * 当连接断开时调用的方法
+     *
      * @param session
      */
     @OnClose
@@ -51,14 +54,15 @@ public class SunWebSocket {
 
     /**
      * 当有来自客户端的消息时
+     *
      * @param msg
      * @param session
      */
     @OnMessage
-    public void onMessage(String msg,Session session) {
+    public void onMessage(String msg, Session session) {
         Map<String, String> map = new HashMap<>();
-        map.put("ip",session.getId());
-        map.put("msg",msg);
+        map.put("ip", session.getId());
+        map.put("msg", msg);
         for (SunWebSocket sunWebSocket : webSocketSet) {
             try {
                 sunWebSocket.session.getBasicRemote().sendText(session.getId() + ":" + msg);
@@ -69,7 +73,7 @@ public class SunWebSocket {
     }
 
     @OnError
-    public void onError(Session session,Throwable error) {
+    public void onError(Session session, Throwable error) {
 
         try {
             session.getBasicRemote().sendText(error.getMessage());

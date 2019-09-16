@@ -4,7 +4,14 @@
  * packageName: com.gzsys.common.config
  * date: 2018-02-01 1:14
  * copyright(c) 2017-2020 xxx公司
- *//*
+ *
+ * @version: V1.0
+ * @author: fendo
+ * @className: SwaggerConfig
+ * @packageName: com.fendo.mybatis.plus.config
+ * @description: Swagger配置文件
+ * @data: 2018-02-01 1:14
+ **//*
 
 package cn.myblog.util;
 
