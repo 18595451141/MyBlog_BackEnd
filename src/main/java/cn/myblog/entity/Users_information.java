@@ -11,8 +11,6 @@ public class Users_information {
 
     private String User_password; //密码非空
 
-    private String User_Key; //用户密钥
-
     private String User_nickname; //昵称
 
     private String User_headPortrait; //头像存储路径
@@ -60,14 +58,6 @@ public class Users_information {
 
     public void setUser_password(String user_password) {
         User_password = user_password;
-    }
-
-    public String getUser_Key() {
-        return User_Key;
-    }
-
-    public void setUser_Key(String user_Key) {
-        User_Key = user_Key;
     }
 
     public String getUser_nickname() {
@@ -164,7 +154,6 @@ public class Users_information {
                 "User_id=" + User_id +
                 ", User_accountNumber='" + User_accountNumber + '\'' +
                 ", User_password='" + User_password + '\'' +
-                ", User_Key='" + User_Key + '\'' +
                 ", User_nickname='" + User_nickname + '\'' +
                 ", User_headPortrait='" + User_headPortrait + '\'' +
                 ", User_jurisdiction=" + User_jurisdiction +

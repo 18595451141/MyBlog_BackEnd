@@ -19,7 +19,7 @@ public class WebConfigurer implements WebMvcConfigurer {
     public void addInterceptors(InterceptorRegistry registry) {
         // addPathPatterns("/**") 表示拦截所有的请求，
         // excludePathPatterns("/index/{name}") 白名单，不拦截这个方法 需注意：登录首页需要加入白名单不然无限循环
-        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/index/{name}");
+        registry.addInterceptor(loginInterceptor).addPathPatterns("/**").excludePathPatterns("/Users/{name}");
     }
 
     // 这个方法是用来配置静态资源的，比如html，js，css，等等

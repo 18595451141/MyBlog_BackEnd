@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpSession;
+
 @RestController
 @RequestMapping(value = "/Users")
 public class UsersController {
@@ -15,8 +17,8 @@ public class UsersController {
     private UsersService users_Service;
 
     @RequestMapping(value = "/UsersLogin")
-    public JSONObject UsersLogin(Users_information user) {
-        return users_Service.UsersLogin(user);
+    public JSONObject UsersLogin(Users_information user,HttpSession session) {
+        return users_Service.UsersLogin(user,session);
     }
 
     @RequestMapping(value = "/UsersAdd")

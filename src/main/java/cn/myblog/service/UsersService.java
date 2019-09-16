@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Service
@@ -24,42 +25,39 @@ public class UsersService {
     private UsersStateMapper users_stateMapper;
 
     /*用户登录*/
-    public JSONObject UsersLogin(Users_information user) {
+    public JSONObject UsersLogin(Users_information user, HttpSession session) {
         JSONObject json = new JSONObject();
         try {
             if (user.getUser_accountNumber() != null && user.getUser_password() != null && user.getUser_accountNumber() != "" && user.getUser_password() != "") {
+                //把用户输入的加密成SHA512位密码
+                user.setUser_password(SHA512Utils.SHA512(user.getUser_password()));
                 //验证身份
-                // 取出数据库AES128位的用户密码
                 List<Users_information> usersLogin = users_Mapper.UsersLogin(user);
                 if (1 == usersLogin.size()) {
-                    //把用户输入的加密成SHA512位密码
-                    String UserSHAPWD = SHA512Utils.SHA512(user.getUser_password());
                     Users_state users_state = new Users_state();
-                    String UserDataPWD = AES128Utils.dcodes(usersLogin.get(0).getUser_password(), usersLogin.get(0).getUser_Key()); //数据库：用密钥解密成SHA512位密码
                     //身份通过的话
-                    if (UserSHAPWD.equals(UserDataPWD)) {
-                        users_state.setUser_id(usersLogin.get(0).getUser_id());
-                        if (users_stateMapper.Users_stateUnique(users_state).size() == 0 && users_stateMapper.Users_stateAdd(users_state)) {
-                            json.put("state", "登录成功");
+                    users_state.setUser_id(usersLogin.get(0).getUser_id());
+                    if (users_stateMapper.Users_stateUnique(users_state).size() == 0 && users_stateMapper.Users_stateAdd(users_state)) {
+                        session.setAttribute("usersLogin", usersLogin);
+                        session.setMaxInactiveInterval(60);//一分钟
+                        json.put("state", "登录成功");
+                        return json;
+                    } else {
+                        // 如果已经登录，则发送挤退信息
+                            /*WebSocketServer wss = new WebSocketServer();
+                            wss.getWebSocket(false);*/
+                        if (users_stateMapper.Users_stateDelete(users_state) && users_stateMapper.Users_stateAdd(users_state)) {
+                            session.setAttribute("usersLogin", usersLogin);
+                            session.setMaxInactiveInterval(60);//一分钟
+                            json.put("state", "顶号成功");
                             return json;
                         } else {
-                            // 如果已经登录，则发送挤退信息
-                        /*WebSocketServer wss = new WebSocketServer();
-                        wss.getWebSocket(false);*/
-                            if (users_stateMapper.Users_stateDelete(users_state) && users_stateMapper.Users_stateAdd(users_state)) {
-                                json.put("state", "顶号成功");
-                                return json;
-                            } else {
-                                json.put("state", "顶号失败");
-                                return json;
-                            }
+                            json.put("state", "顶号失败");
+                            return json;
                         }
-                    } else {
-                        json.put("state", "密码错误");
-                        return json;
                     }
                 } else if (0 == usersLogin.size()) {
-                    json.put("state", "无此账号");
+                    json.put("state", "用户名或密码错误");
                     return json;
                 } else {
                     json.put("state", "联系管理员，账号重复");
@@ -70,8 +68,8 @@ public class UsersService {
                 return json;
             }
         } catch (Exception e) {
-            //throw new Exception("系统错误：用户名重复,数据库里用户名必须唯一"); 自定义异常
-            json.put("state", "无此用户");
+            //throw new Exception("出现异常，联系管理员"); 自定义异常
+            json.put("state", "出现异常，联系管理员");
             return json;
         }
     }
@@ -81,25 +79,30 @@ public class UsersService {
     public JSONObject UsersAdd(Users_information user) {
         JSONObject json = new JSONObject();
         try {
-            if (user != null) {
-                user.setUser_Key(CommonlyUsedUtils.getRandomNumber(16));//16位随机密钥 作AES128位加密解密用
-                user.setUser_password(AES128Utils.ecodes(SHA512Utils.SHA512(user.getUser_password()), user.getUser_Key()));//用户输入的密码加密成SHA512位在用密钥加密成AES128位密码
+            if (user.getUser_accountNumber() != null && user.getUser_password() != null && user.getUser_accountNumber() != "" && user.getUser_password() != "") {
+                user.setUser_password(SHA512Utils.SHA512(user.getUser_password()));//用户输入的密码加密成SHA512位
                 Integer UsersAccountDuplication = users_Mapper.UsersAccountDuplication(user);
-                if (UsersAccountDuplication == 0 && users_Mapper.UsersAdd(user)) {
-                    json.put("state", "添加成功");
-                    return json;
+                if (UsersAccountDuplication == 0) {
+                    if (users_Mapper.UsersAdd(user)) {
+                        json.put("state", "添加成功");
+                        return json;
+                    } else {
+                        json.put("state", "添加失败");
+                        return json;
+                    }
                 } else {
-                    json.put("state", "添加失败");
+                    json.put("state", "用户名重复");
                     return json;
                 }
+            } else {
+                json.put("state", "用户密码不能为空");
+                return json;
             }
         } catch (Exception e) {
             e.printStackTrace();
-            json.put("state", "添加出现异常，联系管理员");
+            json.put("state", "出现异常，联系管理员");
             return json;
         }
-        System.out.println("-----json：-----" + json);
-        return json;
     }
 
     /*验证用户权限身份*/
