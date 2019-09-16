@@ -7,7 +7,7 @@
 <body>
 <a href="/index/Test0001">Js示例</a>
 <a href="/index/Test0002">进入聊天室</a>
-
+    缺少功能：单一登录：
     登录：
     <form action="/Users/UsersLogin" method="post">
         账号：<input type="text" value="张三" name="User_accountNumber" id="User_accountNumber"/>
@@ -21,47 +21,5 @@
         密码：<input type="text" value="123456" name="User_password"/>
         <input type="submit" value="提交">
     </form>
-
-    <script>
-
-        function openWebSocket(User_accountNumber) { // User_accountNumber为当前登录用户的账号
-            var socket;
-            if(typeof(WebSocket) == undefined) {
-                console.log("您的浏览器不支持WebSocket");
-            }else{
-                //实现化WebSocket对象，指定要连接的服务器地址与端口  建立连接
-                socket = new WebSocket("ws://127.0.0.1:8010/websocket/"+User_accountNumber);
-                //打开事件
-                socket.onopen = function() {
-                    console.log("Socket 已打开");
-                    //web sockets只能通过连接发送纯文本数据，所以对于复杂的数据结构，在通过连接发送之前，必须进行序列化。
-                    var message = {
-                        User_accountNumber: document.getElementById("User_accountNumber").value,
-                        User_password: document.getElementById("User_password").value
-                    };
-                    //Web Socket已连接上，使用send()方法发送数据
-                    socket.send(JSON.stringify(message));
-                    console.log("数据发送中...");
-                };
-                //获得消息事件
-                socket.onmessage = function(msg) {
-                    var received_msg=msg.data;
-                    console.log("数据已接收："+received_msg);
-                };
-                //关闭事件
-                socket.onclose = function() {
-                    console.log("Socket已关闭");
-                };
-                //发生了错误事件
-                socket.onerror = function() {
-                    console.log("Socket发生了错误");
-                };
-                //窗口关闭则关闭Socket
-                window.onunload = function(){
-                    socket.close();
-                };
-            }
-        }
-    </script>
 </body>
 </html>

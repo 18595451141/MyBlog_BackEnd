@@ -22,13 +22,10 @@ public class SunWebSocket {
      * concurrent包的线程安全set，存放每个客户端连接对应的webSocket对象。
      */
     private static CopyOnWriteArraySet<SunWebSocket> webSocketSet = new CopyOnWriteArraySet<>();
-
-
     /**
      * 与某个客户端的会话，通过会话给客户端传递消息
      */
     private Session session;
-
     /**
      * 开启一个客户端对话连接
      * @param session
