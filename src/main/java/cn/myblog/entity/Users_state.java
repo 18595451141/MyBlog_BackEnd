@@ -6,7 +6,7 @@ public class Users_state {
 
     private Integer User_id;
 
-    private Integer Us_state;
+    private String Us_sessionid;
 
     public Integer getUs_id() {
         return Us_id;
@@ -24,12 +24,12 @@ public class Users_state {
         User_id = user_id;
     }
 
-    public Integer getUs_state() {
-        return Us_state;
+    public String getUs_sessionid() {
+        return Us_sessionid;
     }
 
-    public void setUs_state(Integer us_state) {
-        Us_state = us_state;
+    public void setUs_sessionid(String us_sessionid) {
+        Us_sessionid = us_sessionid;
     }
 
     @Override
@@ -37,7 +37,7 @@ public class Users_state {
         return "Users_state{" +
                 "Us_id=" + Us_id +
                 ", User_id=" + User_id +
-                ", Us_state=" + Us_state +
+                ", Us_sessionid=" + Us_sessionid +
                 '}';
     }
 }

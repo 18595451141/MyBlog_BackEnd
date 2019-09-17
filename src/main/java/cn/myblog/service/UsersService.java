@@ -4,8 +4,6 @@ import cn.myblog.entity.Users_information;
 import cn.myblog.entity.Users_state;
 import cn.myblog.mapper.UsersMapper;
 import cn.myblog.mapper.UsersStateMapper;
-import cn.myblog.util.AES128Utils;
-import cn.myblog.util.CommonlyUsedUtils;
 import cn.myblog.util.SHA512Utils;
 import net.minidev.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,6 +23,19 @@ public class UsersService {
     private UsersStateMapper users_stateMapper;
 
     /*用户登录*/
+    /*
+        密码加密 已完成
+        拦截登录 已完成
+        单一登录 已完成
+        自动登录 进行中
+
+
+        图片验证码 待完成
+        扫码登录 待完成
+        第三方登录 待完成
+
+        动态权限 待完成
+    */
     public JSONObject UsersLogin(Users_information user, HttpSession session) {
         JSONObject json = new JSONObject();
         try {
@@ -34,18 +45,30 @@ public class UsersService {
                 //验证身份
                 List<Users_information> usersLogin = users_Mapper.UsersLogin(user);
                 if (1 == usersLogin.size()) {
+
                     Users_state users_state = new Users_state();
-                    //身份通过的话
                     users_state.setUser_id(usersLogin.get(0).getUser_id());
-                    if (users_stateMapper.Users_stateUnique(users_state).size() == 0 && users_stateMapper.Users_stateAdd(users_state)) {
+                    users_state.setUs_sessionid(session.getId());
+                    if(users_stateMapper.Users_stateUnique(users_state).size()>=1 && users_stateMapper.Users_stateUpdate(users_state)){
+                        session.setAttribute("usersid", usersLogin.get(0).getUser_id());
+                        session.setAttribute("userssessionid", session.getId());
+                        json.put("state", "登录成功");
+                    }else if(users_stateMapper.Users_stateAdd(users_state)){
+                        session.setAttribute("usersid", usersLogin.get(0).getUser_id());
+                        session.setAttribute("userssessionid", session.getId());
+                        json.put("state", "登录成功");
+                    }else{
+                        json.put("state", "登录失败");
+                    }
+                    return json;
+
+                    /*if (users_stateMapper.Users_stateUnique(users_state).size() == 0 && users_stateMapper.Users_stateAdd(users_state)) {
                         session.setAttribute("usersLogin", usersLogin);
                         session.setMaxInactiveInterval(60);//一分钟
                         json.put("state", "登录成功");
                         return json;
                     } else {
                         // 如果已经登录，则发送挤退信息
-                            /*WebSocketServer wss = new WebSocketServer();
-                            wss.getWebSocket(false);*/
                         if (users_stateMapper.Users_stateDelete(users_state) && users_stateMapper.Users_stateAdd(users_state)) {
                             session.setAttribute("usersLogin", usersLogin);
                             session.setMaxInactiveInterval(60);//一分钟
@@ -55,7 +78,7 @@ public class UsersService {
                             json.put("state", "顶号失败");
                             return json;
                         }
-                    }
+                    }*/
                 } else if (0 == usersLogin.size()) {
                     json.put("state", "用户名或密码错误");
                     return json;
@@ -74,8 +97,13 @@ public class UsersService {
         }
     }
 
-
-    /*添加用户*/
+    /*用户注册*/
+    /*
+        基本注册 已完成
+        用户密码加密 已完成
+        手机短信验证码注册 未完成
+        邮箱验证码注册 未完成
+    */
     public JSONObject UsersAdd(Users_information user) {
         JSONObject json = new JSONObject();
         try {
@@ -104,7 +132,5 @@ public class UsersService {
             return json;
         }
     }
-
-    /*验证用户权限身份*/
 
 }

@@ -43,7 +43,6 @@ Create table Users_information(
 	User_id BIGINT(50) AUTO_INCREMENT NOT NULL COMMENT '用户表主键id自增非空',
 	User_accountNumber VARCHAR(18) UNIQUE NOT NULL COMMENT '账号唯一非空',
 	User_password VARCHAR(3000) NOT NULL DEFAULT '123456' COMMENT '密码非空',
-	User_Key VARCHAR(20) NOT NULL COMMENT '密钥',
 	User_nickname VARCHAR(50) COMMENT '昵称',
 	User_headPortrait VARCHAR(300) COMMENT '头像',
 	User_jurisdiction Integer DEFAULT 0 NOT NULL COMMENT '用户权限：0普通用户，1会员，2管理员，3最高管理',

@@ -7,7 +7,7 @@ import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
-//拦截器
+//拦截器配置二
 @Configuration
 public class WebConfigurer implements WebMvcConfigurer {
     //将登录拦截器LoginInterceptor注入到WebConfigurer中。
